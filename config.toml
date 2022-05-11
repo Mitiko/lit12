@@ -1,0 +1,53 @@
+baseurl = "/"
+languageCode = "bg"
+defaultContentLanguage = "bg"
+theme = "hello-friend"
+paginate = 12
+
+title = 'Литература 12-ти клас'
+
+[params]
+    contentTypeName = "posts"
+    defaultTheme = "light"
+    showMenuItems = 0 # default is 2 (about + showcase pages)
+    # showReadingTime = true
+
+    # Show table of contents at the top of your posts (defaults to false)
+    # Alternatively, add this param to post front matter for specific posts
+    # toc = true
+
+    # Show full page content in RSS feed items
+    # Default is Description or Summary metadata in the front matter
+    # rssFullText = true
+
+[languages]
+    [languages.bg]
+        title = "лит 12"
+        subtitle = ""
+        keywords = "литература 12ти клас"
+        copyright = "mitiko.x"
+        menuMore = "Покажи повече"
+        writtenBy = "Автор"
+        readMore = "Прочети повече"
+        readOtherPosts = "Прочети други постове"
+        newerPosts = "Нови постове"
+        olderPosts = "Стари постове"
+        minuteReadingTime = "мин четене"
+        dateFormatSingle = "02-01-2006"
+        dateFormatList = "02-01-2006"
+        # Leave empty to disable, enter display text to enable
+        # lastModDisplay = ""
+
+        [languages.bg.params.logo]
+            logoText = "лит12"
+            logoHomeLink = "/"
+
+        # [languages.en.menu]
+        #     [[languages.en.menu.main]]
+        #         identifier = ""
+        #         name = "About"
+        #         url = "/about"
+            # [[languages.en.menu.main]]
+            #     identifier = "showcase"
+            #     name = "Showcase"
+            #     url = "/showcase"

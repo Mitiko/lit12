@@ -25,7 +25,7 @@ jobs:
         run: hugo --minify
       
       - name: Create cname file
-        run: echo 'lit12.top' > public/CNAME
+        run: echo 'www.lit12.top' > public/CNAME
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

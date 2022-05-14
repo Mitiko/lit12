@@ -3,5 +3,5 @@
 }
 
 .post {
-    max-width: 60vw;
+    max-width: max(70vw, 800px);
 }

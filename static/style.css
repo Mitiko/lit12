@@ -5,3 +5,90 @@
 .post {
     max-width: max(70vw, 800px);
 }
+
+#gamefield {
+    /* border: 2px solid var(--color-secondary); */
+    border: 2px solid var(--color);
+    padding: 1em 1.2em;
+    border-radius: 8px;
+}
+
+#gamefield * {
+    border-radius: 8px;
+}
+
+.d-question {
+    margin-block-end: 1em;
+    font-size: 1.5rem;
+}
+
+.d-ans {
+    margin-inline: auto;
+    width: 40ch;
+}
+
+.d-ans > * + * { margin-block-start: 0.3rem; }
+
+.d-ans > * {
+    border: 2px solid var(--color);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    padding: 0.4em 0.8em;
+}
+
+.d-ans > *:hover {
+    background-color: var(--border-color);
+}
+
+.d-ans.reveal > .clicked {
+    background-color: red;
+}
+
+.d-ans.reveal > .correct {
+    background-color: greenyellow;
+}
+
+/* TODO: Make it slide right on delete */
+/* TODO: Add animation to slide in from left on appear */
+#gamefield.reveal-delete {
+    animation: fadeout 0.5s;
+    animation-delay: 1s;
+}
+
+@keyframes fadeout {
+    to { opacity: 0; }
+}
+
+/* Score */
+.score {
+    position: relative;
+    width: inherit;
+    height: calc(1.6 * (1em + 1.1em / 2));
+    margin-block-end: 1em;
+}
+
+.score > * {
+    position: absolute;
+    font-weight: 700;
+}
+
+.score> *:nth-child(1) {
+    left: 0.8em;
+}
+
+.score> *:nth-child(2) {
+    right: 0.8em;
+    color: green;
+}
+
+#correct, #correct-row {
+    color: greenyellow;
+}
+
+#total {
+    color: red;
+}
+
+#correct, #correct-row, #total, .seperator {
+    font-size: 1.6em;
+}

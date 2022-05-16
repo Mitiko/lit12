@@ -1,19 +1,3 @@
 <script>
-if (!(sessionStorage.getItem("_swa") && document.referrer.indexOf(location.protocol + "//" + location.host) !== 0)) {
-    const query = "https://counter.dev/track?" + new URLSearchParams({ referrer: document.referrer, screen: screen.width + "x" + screen.height, user: "mitikox", utcoffset: "3" });
-
-    console.log(query);
-    fetch(query)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
-        }
-
-        console.log(response);
-    })
-    .catch(err => {
-        console.log(err);
-    });
-};
-sessionStorage.setItem("_swa", "1");
+if(!sessionStorage.getItem("_swa")||0===document.referrer.indexOf(location.protocol+"//"+location.host)){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"mitikox",utcoffset:"3"})).then(r=>{if(!r.ok)throw new Error(`Error! status: ${r.status}`)}).catch(e=>{console.log(e)})}sessionStorage.setItem("_swa","1");
 </script>

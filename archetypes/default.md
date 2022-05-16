@@ -2,7 +2,7 @@
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 draft: true
-tags: [ "тема" ]
+tags: [ "тема", "firstName lastName" ]
 description: "
 Автор -> firstName lastName
 

@@ -24,7 +24,7 @@
 
 .d-ans {
     margin-inline: auto;
-    width: 40ch;
+    max-width: 40ch;
 }
 
 .d-ans > * + * { margin-block-start: 0.3rem; }

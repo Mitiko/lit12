@@ -11,6 +11,13 @@ const setup = (data) => {
     _g.score.correct_elem = document.getElementById("correct");
     _g.score.total_elem = document.getElementById("total");
     _g.score.correct_in_row_elem = document.getElementById("correct-row");
+
+    _g.unique = {};
+    _g.unique.genres = _g.data.map(x => x.genre).filter(unique);
+    _g.unique.authors = _g.data.map(x => x.author).filter(unique);
+    _g.unique.sections = _g.data.map(x => x.section).filter(unique);
+    _g.unique.titles = _g.data.map(x => x.title);
+
     _g.gamefield = document.getElementById("gamefield");
     // setup reload -> when the animation of previous question ends
     _g.gamefield.addEventListener("animationend", () => {
@@ -25,17 +32,17 @@ const loadQuestion = () => {
     _g.gamefield.replaceChildren(); // with no args passed -> removes all children
     _g.gamefield.classList.remove("reveal-delete");
     _g.iter = {};
+
     const index = Math.floor(Math.random() * _g.data.length);
     const neigbors_start_idx = 3 * Math.floor(index / 3);
     const neigbors_end_idx = neigbors_start_idx + 3;
     _g.iter.idx = index % 3;
     _g.iter.works = _g.data.slice(neigbors_start_idx, neigbors_end_idx);
     _g.iter.work = _g.iter.works[_g.iter.idx];
-    _g.iter.q = getQuestionType();
+    _g.iter.q = Math.floor(Math.random() * 4); // question type
 
     const real_ans = getRealAnswer();
-    let ans = getAnswers();
-    ans = ans.sort(() => Math.random() - 0.5);
+    const ans = getAnswers(real_ans);
     console.assert(ans.length === 4);
     console.assert(ans.indexOf(real_ans) !== -1);
 
@@ -49,52 +56,66 @@ const loadQuestion = () => {
 
 const unique = (value, index, self) => self.indexOf(value) === index;
 const getQuestionType = () => 0; // Math.floor(Math.random() * numQuestions);
-const getAnswers = () => {
-    const data = _g.data;
-    const q = _g.iter.q;
-    const works = _g.iter.works;
-    // helper functions
-    const genRandomGenre = () => {
-        while(true) {
-            const random_idx = Math.floor(Math.random() * data.length);
-            const new_genre = data[random_idx].genre;
-            if (genres.indexOf(new_genre) == -1) { return new_genre; }
-        }
+const getAnswers = (real_ans) => {
+    let options;
+    switch (_g.iter.q) {
+        case 0: options = _g.unique.genres.filter(x => x !== real_ans); break;
+        case 1: options = _g.unique.authors.filter(x => x !== real_ans); break;
+        case 2: options = _g.unique.sections.filter(x => x !== real_ans); break;
+        case 3: options = _g.unique.titles.filter(x => x !== real_ans); break;
+        default:
+            console.error("question type not found");
+            return "Error!";
     }
 
-    // assume q = 0 for now
-    console.assert(q === 0);
-    // we'll do just title -> genres as PoC
+    // choose 3 random
+    options = options.sort(() => 0.5 - Math.random());
+    options = options.slice(0, 3);
 
-    let genres = works.map(x => x.genre).filter(unique);
-    console.assert(genres.length <= 3);
-    while (genres.length < 4) {
-        genres.push(genRandomGenre());
-    }
-    console.assert(genres.length == 4);
+    // shuffle answers
+    options.push(real_ans);
+    options = options.sort(() => 0.5 - Math.random());
 
-    return genres;
+
+    console.assert(options.length == 4);
+
+    return options;
 };
+
 const getRealAnswer = () => {
     const q = _g.iter.q;
     const work = _g.iter.work;
-    // assume q = 0 for now
-    console.assert(q === 0);
-    return work.genre;
+
+    switch (q) {
+        case 0: return work.genre;
+        case 1: return work.author;
+        case 2: return work.section;
+        case 3: return work.title;
+        default:
+            console.error("question type not found");
+            return "Error!";
+    }
 };
+
 const getQuestionElement = () => {
     const q = _g.iter.q;
     const work = _g.iter.work;
 
     let question = document.createElement("div");
     question.classList.add("d-question");
-
-    // assume only asking for genre for now
-    console.assert(q === 0);
-    question.innerHTML = `Какъв е <b>жанра</b> на творбата "${work.title}"?`;
+    switch (q) {
+        case 0: question.innerHTML = `Какъв е <b>жанра</b> на творбата "${work.title}"?`; break;
+        case 1: question.innerHTML = `Кой е <b>автора</b> на творбата "${work.title}"?`; break;
+        case 2: question.innerHTML = `От коя <b>тема</b> е творбата "${work.title}"?`; break;
+        case 3: question.innerHTML = `Кое произведение е от темата за <b>${work.section}</b> с автор <b>${work.author}</b>?`; break;
+        default:
+            console.error("question type not found");
+            return "Error!";
+    }
 
     return question;
 };
+
 const getAnswerElement = (ans, real_ans) => {
     console.assert(ans.length == 4);
     let answers = document.createElement("div");
@@ -112,6 +133,7 @@ const getAnswerElement = (ans, real_ans) => {
 
     return answers;
 }
+
 const revealAnswer = (event) => {
     // if not clicked -> don't execute
     if (event.target.parentElement.classList.contains("reveal")) return;

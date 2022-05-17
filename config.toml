@@ -26,7 +26,7 @@ title = 'Литература 12-ти клас'
         subtitle = ""
         keywords = "литература 12ти клас"
         copyright = "mitiko.x"
-        menuMore = "Покажи повече"
+        menuMore = "Меню"
         writtenBy = "Автор"
         readMore = "Прочети повече"
         readOtherPosts = "Прочети други постове"
@@ -42,12 +42,12 @@ title = 'Литература 12-ти клас'
             logoText = "лит12"
             logoHomeLink = "/"
 
-        # [languages.en.menu]
-        #     [[languages.en.menu.main]]
-        #         identifier = ""
-        #         name = "About"
-        #         url = "/about"
-            # [[languages.en.menu.main]]
-            #     identifier = "showcase"
-            #     name = "Showcase"
-            #     url = "/showcase"
+        [languages.bg.menu]
+            [[languages.bg.menu.main]]
+                identifier = "test"
+                name = "Тест"
+                url = "/posts/game"
+            [[languages.bg.menu.main]]
+                identifier = "obshti"
+                name = "Общи"
+                url = "/tags/обща/"
